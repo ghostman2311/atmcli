@@ -40,6 +40,12 @@ module.exports = class Account {
   async #load() {
     this.#balance = parseFloat(await FileSystem.read(this.filePath));
   }
+  async withdraw(amount) {
+    if (this.balance < amount)
+      throw new Error("You balance is not sufficient to make this transaction");
+    FileSystem.write(this.filePath, this.balance - amount);
+    this.#balance = this.#balance - amount;
+  }
 
   async deposit(amount) {
     FileSystem.write(this.filePath, this.balance + amount);

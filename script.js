@@ -33,7 +33,11 @@ async function promptTask(account) {
   if (response === "deposit") {
     const amount = parseFloat(await CommandLine.ask("How much?"));
     await account.deposit(amount);
-    CommandLine.print(`You updated balance is ${account.balance}`);
+    CommandLine.print(`Your updated balance is ${account.balance}`);
+  } else if (response === "withdraw") {
+    const amount = parseFloat(await CommandLine.ask("How much to withdraw?"));
+    await account.withdraw(amount);
+    CommandLine.print(`Your updated balance is ${account.balance}`);
   }
 }
 
