@@ -16,7 +16,7 @@ module.exports = class Account {
   }
 
   get filePath() {
-    return `account/${this.#name}.txt`;
+    return `accounts/${this.#name}.txt`;
   }
   //   load() {
   //     fs.readFileSync(this.filePath, (err, data) => {
@@ -42,6 +42,24 @@ module.exports = class Account {
   }
   static async find(accountName) {
     const account = new Account(accountName);
-    await account.#load();
+    try {
+      await account.#load();
+      return account;
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  }
+
+  static async create(accountName) {
+    const account = new Account(accountName);
+    try {
+      await FileSystem.write(account.filePath, 0);
+      account.#balance = 0;
+      return account;
+    } catch (e) {
+      console.log(e);
+      return;
+    }
   }
 };
