@@ -40,6 +40,11 @@ module.exports = class Account {
   async #load() {
     this.#balance = parseFloat(await FileSystem.read(this.filePath));
   }
+
+  async deposit(amount) {
+    FileSystem.write(this.filePath, this.balance + amount);
+    this.#balance = this.#balance + amount;
+  }
   static async find(accountName) {
     const account = new Account(accountName);
     try {
